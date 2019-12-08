@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>节流防抖</title>
+        <style>
+            #content1{
+                height:150px;
+                line-height:150px;
+                text-align:center; 
+                color: white;
+                background-color:green;
+                font-size:80px;
+            }
+            #content2{
+                height:150px;
+                line-height:150px;
+                text-align:center; 
+                color: white;
+                background-color:gray;
+                font-size:80px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="content1"></div>
+        <div id="debounce">防抖</div>
+        <div id="throttle">节流</div>
+        <div id="content2"></div>
+        </div>
+        <script>
+            //防抖
+            function debounce(fn,delay){
+                let timer = null 
+                return function() {
+                        if(timer){
+                            clearTimeout(timer)//触发事件执行debounce函数。如果在delay时间内一直触发，那么时间timer一直会被清零,则fn不会被显示。
+                            }
+                        timer = setTimeout(fn,delay) //在delay时间内，事件没有被触发，到了delay时间则执行fn
+                        }
+            }
+            //节流
+            function throttle(fn,delay){
+                let flag = true//设置一个变量来判断是否执行函数
+                return function() {
+                    if(!flag){
+                        return false//如果flag为false则表示还没到执行函数的时间，直接返回 
+                        }
+                        //flag为true，是时候执行函数了
+                    flag = false
+                    setTimeout(() => {
+                        fn()
+                        flag = true;
+                    }, delay)}//在这个函数执行完之前，flag一直为false
+                
+            }
+
+            let num1 = 1
+            let num2 = 1
+            let content1 = document.getElementById('content1')
+            let content2 = document.getElementById('content2')
+            function count1() {
+                content1.innerHTML = num1++
+            }
+            function count2() {
+                content2.innerHTML = num2++
+            }
+
+            content1.onmousemove = debounce(count1,1000)
+            content2.onmousemove = throttle(count2,1000)
+             
+        </script>
+    </body>
+</html>

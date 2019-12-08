@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+            function sayInfo(age) {
+                console.log("name:"+this.name)
+                console.log("age:"+age)
+                }
+            user = {
+                name: "zzx"
+                };
+            Function.prototype.call2 = function(context){
+                context.fn = this //获取函数
+                var args = []
+                for(var i = 1; i < arguments.length; i++){
+                    args.push(arguments[i])
+                }//将参数放入一个栈中
+                context.fn(args)//执行函数  args=[100]
+                delete context.fn //删除函数
+            }
+            sayInfo.call2(user,100)
+    </script>
+</body>
+</html>
